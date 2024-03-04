@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ProjectBox from './components/dashboard';
+import Dashboard from './components/dashboard';
 
 const App: React.FC = () => {
   return (
