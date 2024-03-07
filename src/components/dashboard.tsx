@@ -10,6 +10,12 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
   height: 60,
   lineHeight: '60px',
+  cursor: 'pointer',
+  transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'scale(1.05)',
+    boxShadow: '0 4px 20px 0 rgba(0,0,0,0.12)'
+  },
 }));
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
@@ -22,10 +28,9 @@ const Dashboard: React.FC = () => {
   
   // Render begins here
   return (
-    <Grid container spacing={2}>
-      {[lightTheme, darkTheme].map((theme, index) => (
-        <Grid item xs={6} key={index}>
-          <ThemeProvider theme={theme}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ThemeProvider theme={lightTheme}>
             <Box
               sx={{
                 p: 2,
@@ -36,16 +41,15 @@ const Dashboard: React.FC = () => {
                 gap: 2,
               }}
             >
-              {[0, 1, 2, 3, 4, 6, 8, 12, 16, 24].map((elevation) => (
-                <Item key={elevation} elevation={elevation}>
-                  {`elevation=${elevation}`}
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, index) => (
+                <Item key={index} elevation={6}>
+                  {`box ${index}`}
                 </Item>
               ))}
             </Box>
           </ThemeProvider>
         </Grid>
-      ))}
-    </Grid>
+      </Grid>
 
   );
   
