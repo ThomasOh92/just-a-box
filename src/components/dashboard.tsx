@@ -23,6 +23,10 @@ const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const { useState } = React;
 
+const handleItemClick = (index) => {
+  (window as any).electron.send('open-single-box', index);
+};
+
 const Dashboard: React.FC = () => {
 
   
@@ -42,7 +46,7 @@ const Dashboard: React.FC = () => {
               }}
             >
               {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, index) => (
-                <Item key={index} elevation={6}>
+                <Item key={index} elevation={6} onClick={() => handleItemClick(index)}>
                   {`box ${index}`}
                 </Item>
               ))}
