@@ -1,11 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import docLinkSlice from './features/docLinkSlice';
+import fileLinkSlice from './features/fileLinkSlice';
 import stickyNoteSlice from './features/stickyNoteSlice';
 import webLinkSlice from './features/webLinkSlice';
 
 
 const rootReducer = combineReducers({
-  dockLinks: docLinkSlice,
+  fileLinks: fileLinkSlice,
   stickyNotes: stickyNoteSlice,
   webLinks: webLinkSlice,
   // Add other slices as needed

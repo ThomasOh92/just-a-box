@@ -21,9 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
 const lightTheme = createTheme({ palette: { mode: 'light' } });
 
-const { useState } = React;
-
-const handleItemClick = (index) => {
+const handleItemClick = (index: number) => {
   (window as any).electron.send('open-single-box', index);
 };
 
