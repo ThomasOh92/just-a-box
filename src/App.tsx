@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Dashboard from './components/dashboard';
 import SingleBox from './components/singlebox'; 
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 
 const App: React.FC = () => {
   const [currentComponent, setCurrentComponent] = useState('main');
@@ -15,7 +17,7 @@ const App: React.FC = () => {
 
   switch (currentComponent) {
     case 'singleBox':
-      return <SingleBox />;
+      return <Provider store={store}><SingleBox /></Provider>;
     case 'main':
     default:
       return <Dashboard />;
