@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface StickyNote {
   id: string; // A unique identifier for each sticky note
-  text: string;
+  content: string;
   width: number;
   height: number;
 }
@@ -30,13 +30,14 @@ export const stickyNotesSlice = createSlice({
     removeStickyNote: (state, action: PayloadAction<string>) => {
       state.stickyNotes = state.stickyNotes.filter(note => note.id !== action.payload);
     },
-    updateStickyNote: (state, action: PayloadAction<StickyNote>) => {
-      const index = state.stickyNotes.findIndex(note => note.id === action.payload.id);
-      if (index !== -1) {
-        state.stickyNotes[index] = action.payload;
-      }
+    updateStickyNote: (state, action: PayloadAction<{ id: string; content: string }>) => {
+      const { id, content } = action.payload;
+      const note = state.stickyNotes.find(note => note.id === id);
+      if (note) {
+        note.content = content;
+      }    
     },
-    resizeStickyNote: (state, action: PayloadAction<{ id: string; width: number; height: number; }>) => {
+    resizeStickyNote: (state, action: PayloadAction<{ id: string; width: number; height: number }>) => {
         const { id, width, height } = action.payload;
         const note = state.stickyNotes.find(note => note.id === id);
         if (note) {
