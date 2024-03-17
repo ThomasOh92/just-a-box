@@ -35,5 +35,6 @@ const createWindow = () => {
   
     // Load the same HTML file but use a hash or query param to differentiate
     singleBoxWindow.loadFile('dist/index.html', { hash: `box/${boxId}` });    
+    singleBoxWindow.webContents.openDevTools();
   })  
   

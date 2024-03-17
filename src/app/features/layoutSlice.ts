@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Layout } from 'react-grid-layout';
 
-// Define the type for a single layout item
-export interface LayoutItem {
-    i: string; // Unique identifier
-    x: number; // x position
-    y: number; // y position
-    w: number; // width
-    h: number; // height
-    minH?: number; // minimum height (optional)
-  }
+
+// // Define the type for a single layout item
+// export interface LayoutItem {
+//     i: string; // Unique identifier
+//     x: number; // x position
+//     y: number; // y position
+//     w: number; // width
+//     h: number; // height
+//     minH?: number; // minimum height (optional)
+//   }
   
 // Define the type for the layouts state
 interface LayoutsState {
     layouts: {
-        md: LayoutItem[];
+        md: Layout[];
       };
 }
 
