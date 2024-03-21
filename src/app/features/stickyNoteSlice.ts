@@ -5,14 +5,18 @@ interface StickyNote {
   content: string;
   width: number;
   height: number;
+  x: number;
+  y: number
 }
 
 interface StickyNotesState {
-  stickyNotes: StickyNote[];
+  stickyNotesArray: StickyNote[];
 }
 
 const initialState: StickyNotesState = {
-  stickyNotes: [],
+  stickyNotesArray: [
+    {id: "note1", content: "note1content", width: 100, height: 100, x: 0, y: 0}
+  ],
 };
 
 export const stickyNotesSlice = createSlice({
@@ -44,10 +48,18 @@ export const stickyNotesSlice = createSlice({
           note.width = width;
           note.height = height;
         }
-      },  
+      }, 
+    moveStickyNote: (state, action: PayloadAction<{ id: string; x: number; y: number }>) => {
+      const { id, x, y } = action.payload;
+      const note = state.stickyNotes.find(note => note.id === id);
+      if (note) {
+        note.x = x;
+        note.x = y;
+      }
+    },  
   },
 });
 
-export const { addStickyNote, removeStickyNote, updateStickyNote } = stickyNotesSlice.actions;
+export const { addStickyNote, removeStickyNote, updateStickyNote, moveStickyNote } = stickyNotesSlice.actions;
 
 export default stickyNotesSlice.reducer;

@@ -14,3 +14,4 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+//this gets exported to store.ts, where the store configuration is handled
