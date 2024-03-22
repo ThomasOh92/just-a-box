@@ -25,23 +25,17 @@ const SingleBox: React.FC = () => {
     useSensor(PointerSensor),
   );
   const handleDragEnd = (event) => {
-    
-
-    // console.log(event);
-    // const { id, delta} = event;
-
-    // const x = note.x + delta.x
-    // const y = note.y + delta.y
-
-    // dispatch(moveStickyNote({id, x, y}));
-
-    // setElementPositions(prevPositions => ({
-    //   ...prevPositions,
-    //   [id]: {
-    //     x: prevPositions[id].x + delta.x,
-    //     y: prevPositions[id].y + delta.y,
-    //   }
-    // }));
+        
+    console.log(event);
+    const id = event.active.id;
+    const delta = event.delta;
+    const note = stickyNotes.find(note => note.id === id);
+ 
+    if (id.startsWith('note')) {
+      const newX = delta.x;
+      const newY = delta.y;
+      dispatch(moveStickyNote({ id, x: newX, y: newY }));
+    }
   };
 
   // Render begins here

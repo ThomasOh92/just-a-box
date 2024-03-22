@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Card, CardHeader, IconButton, Box, TextareaAutosize } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { updateStickyNote, removeStickyNote } from '../../app/features/stickyNoteSlice';
+import { updateStickyNoteContent, removeStickyNote, moveStickyNote } from '../../app/features/stickyNoteSlice';
 import {useDraggable} from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 
@@ -21,18 +21,22 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y
   const dispatch = useAppDispatch();
   
   // Update content of a sticky note
-  const handleUpdate = (id: string, content: string) => {
-    dispatch(updateStickyNote({id, content}));
+  const handleContentChange = (id: string, content: string) => {
+    dispatch(updateStickyNoteContent({id, content}));
+  };
+
+  // Move sticky note
+  const handleMoveStickyNote = (id: string, x: number, y:number) => {
+    dispatch(moveStickyNote({id, x, y}));
   };
 
   // Delete a sticky note
   const handleDelete = (id: string) => {
-    // Dispatch an action to delete the sticky note with the given id
     dispatch(removeStickyNote(id));
   };
 
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id: 'draggable',
+    id,
   });
 
   const style = {
@@ -62,7 +66,7 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y
       <Box sx={{ flex: 1, overflow: 'hidden', p: 2 }}>
         <TextareaAutosize
           defaultValue={content}
-          onChange={(event) => handleUpdate(id, event.target.value)}
+          onChange={(event) => handleContentChange(id, event.target.value)}
           minRows={3}
           style={{ width: '100%', height: '100%', border: 'none', outline: 'none', resize: 'none' }}
         />

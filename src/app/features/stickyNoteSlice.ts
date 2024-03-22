@@ -29,21 +29,21 @@ export const stickyNotesSlice = createSlice({
         id: Math.random().toString(36).substring(7), // This is a placeholder. Use a proper UUID in a real app.
         ...action.payload,
       };
-      state.stickyNotes.push(newNote);
+      state.stickyNotesArray.push(newNote);
     },
     removeStickyNote: (state, action: PayloadAction<string>) => {
-      state.stickyNotes = state.stickyNotes.filter(note => note.id !== action.payload);
+      state.stickyNotesArray = state.stickyNotesArray.filter(note => note.id !== action.payload);
     },
-    updateStickyNote: (state, action: PayloadAction<{ id: string; content: string }>) => {
+    updateStickyNoteContent: (state, action: PayloadAction<{ id: string; content: string }>) => {
       const { id, content } = action.payload;
-      const note = state.stickyNotes.find(note => note.id === id);
+      const note = state.stickyNotesArray.find(note => note.id === id);
       if (note) {
         note.content = content;
       }    
     },
     resizeStickyNote: (state, action: PayloadAction<{ id: string; width: number; height: number }>) => {
         const { id, width, height } = action.payload;
-        const note = state.stickyNotes.find(note => note.id === id);
+        const note = state.stickyNotesArray.find(note => note.id === id);
         if (note) {
           note.width = width;
           note.height = height;
@@ -51,7 +51,7 @@ export const stickyNotesSlice = createSlice({
       }, 
     moveStickyNote: (state, action: PayloadAction<{ id: string; x: number; y: number }>) => {
       const { id, x, y } = action.payload;
-      const note = state.stickyNotes.find(note => note.id === id);
+      const note = state.stickyNotesArray.find(note => note.id === id);
       if (note) {
         note.x = x;
         note.x = y;
@@ -60,6 +60,6 @@ export const stickyNotesSlice = createSlice({
   },
 });
 
-export const { addStickyNote, removeStickyNote, updateStickyNote, moveStickyNote } = stickyNotesSlice.actions;
+export const { addStickyNote, removeStickyNote, updateStickyNoteContent, moveStickyNote } = stickyNotesSlice.actions;
 
 export default stickyNotesSlice.reducer;
