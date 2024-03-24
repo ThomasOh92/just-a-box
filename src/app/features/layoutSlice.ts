@@ -1,28 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Layout } from 'react-grid-layout';
 
 
-// // Define the type for a single layout item
-// export interface LayoutItem {
-//     i: string; // Unique identifier
-//     x: number; // x position
-//     y: number; // y position
-//     w: number; // width
-//     h: number; // height
-//     minH?: number; // minimum height (optional)
-//   }
+// Define the type for a single layout item
+export interface LayoutItem {
+    id: string; // Unique identifier
+    x: number; // x position
+    y: number; // y position
+    width: number; // width
+    height: number; // height
+    type: string; // stickynote, url or file
+  }
   
 // Define the type for the layouts state
 interface LayoutsState {
-    layouts: {
-        md: Layout[];
-      };
+  layoutItemArray: LayoutItem[];
 }
 
 const initialState: LayoutsState = {
-    layouts: {
-      md: []
-    },
+  layoutItemArray: [
+    {id:"note1", x:0, y:0, width:100, height:100, type:"sticky"},
+  ]
 };
   
 

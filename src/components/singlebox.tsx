@@ -1,57 +1,76 @@
 import * as React from 'react';
 import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { Draggable } from './dndkit-components/Draggable';
 import { Droppable } from './dndkit-components/Droppable';
 import { StickyNoteItem } from './box-components/stickyNote'
-import { moveStickyNote } from '../app/features/stickyNoteSlice';
+import { ContextMenu } from './box-components/contextMenu';
+import { addStickyNote, moveStickyNote } from '../app/features/stickyNoteSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { node } from 'webpack';
+import { useState } from 'react';
+import { Box } from '@mui/material';
 
 const SingleBox: React.FC = () => {
   
   const stickyNotes = useAppSelector(state => state.stickyNotes.stickyNotesArray)
-  // we call the store here (useAppSelector, state) > 
-      // pick the stickyNotesSlice > 
-      // pick the array that contains everything
 
-  // const notePosition = {
-  //   x: note.x,
-  //   y: note.y
-  // }
   const dispatch = useAppDispatch();
 
+  // State to open menu on right click
+  const [contextMenu, setContextMenu] = useState<{
+    mouseX: number;
+    mouseY: number;
+  } | null>(null);
+  
 
   const sensors = useSensors(
     useSensor(PointerSensor),
   );
-  const handleDragEnd = (event) => {
+
+
+  const handleDragEnd = (event: any) => {
         
     console.log(event);
     const id = event.active.id;
     const delta = event.delta;
     const note = stickyNotes.find(note => note.id === id);
  
-    if (id.startsWith('note')) {
-      const newX = delta.x;
-      const newY = delta.y;
+    if (note && id.startsWith('note')) {
+      const newX: number = note.x + delta.x;
+      const newY: number = note.y + delta.y;
       dispatch(moveStickyNote({ id, x: newX, y: newY }));
     }
   };
 
+  const handleRightClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setContextMenu({
+      mouseX: event.clientX - 2,
+      mouseY: event.clientY + 4,
+    });
+  };
+
   // Render begins here
   return (
-    <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-      <Droppable id="droppable">
-        {/* <Draggable id="draggable" elementPosition={elementPositions['draggable']}>Drag me</Draggable> */}
-        {/* <StickyNoteItem id="stickynote1" content="hello" elementPosition={notePosition}></StickyNoteItem> */}
-        {/* Sticky note components */}
-        {stickyNotes.map((note) => {
-            return (<StickyNoteItem key={note.id} id={note.id} content={note.content} width={note.width} height={note.height} x={note.x} y={note.y}/>);
-        })}
-      </Droppable>
-    </DndContext>
+    <Box onContextMenu={handleRightClick} height={600}>
+      <ContextMenu 
+        contextMenu={contextMenu} 
+        onClose={() => setContextMenu(null)} 
+        onAddStickyNote={() => dispatch(addStickyNote())} 
+        onAddDocument={() => console.log("adddocplaceholder")} 
+        onAddLink={() => console.log("addlinkplaceholder")}
+        />
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+        <Droppable id="droppable">
+          {/* Sticky note components */}
+          {stickyNotes.map((note) => {
+              return (<StickyNoteItem key={note.id} id={note.id} content={note.content} width={note.width} height={note.height} x={note.x} y={note.y}/>);
+          })}
+        </Droppable>
+      </DndContext>
+    </Box>
   );
   
 };
 
 export default SingleBox;
+
+

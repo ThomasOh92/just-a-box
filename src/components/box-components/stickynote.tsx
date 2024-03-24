@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Card, CardHeader, IconButton, Box, TextareaAutosize } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { updateStickyNoteContent, removeStickyNote, moveStickyNote } from '../../app/features/stickyNoteSlice';
-import {useDraggable} from '@dnd-kit/core';
+import { updateStickyNoteContent, removeStickyNote } from '../../app/features/stickyNoteSlice';
+import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 
 interface StickyNoteItemProps {
@@ -23,11 +22,6 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y
   // Update content of a sticky note
   const handleContentChange = (id: string, content: string) => {
     dispatch(updateStickyNoteContent({id, content}));
-  };
-
-  // Move sticky note
-  const handleMoveStickyNote = (id: string, x: number, y:number) => {
-    dispatch(moveStickyNote({id, x, y}));
   };
 
   // Delete a sticky note

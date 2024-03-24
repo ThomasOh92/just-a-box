@@ -15,7 +15,7 @@ interface StickyNotesState {
 
 const initialState: StickyNotesState = {
   stickyNotesArray: [
-    {id: "note1", content: "note1content", width: 100, height: 100, x: 0, y: 0}
+    {id: "note1", content: "content for note 1", width: 100, height: 100, x: 0, y: 0}
   ],
 };
 
@@ -23,11 +23,15 @@ export const stickyNotesSlice = createSlice({
   name: 'stickyNotes',
   initialState,
   reducers: {
-    addStickyNote: (state, action: PayloadAction<Omit<StickyNote, 'id'>>) => {
-      // Assuming an external function to generate unique IDs, e.g., UUID
+    addStickyNote: (state) => {
+      const newNoteId = "note" + Math.random().toString(36).substring(7) // This is a placeholder. Use a proper UUID in a real app.
       const newNote = {
-        id: Math.random().toString(36).substring(7), // This is a placeholder. Use a proper UUID in a real app.
-        ...action.payload,
+        id: newNoteId,
+        content: "content for note " + newNoteId,
+        width: 100,
+        height: 100,
+        x: 0,
+        y: 0
       };
       state.stickyNotesArray.push(newNote);
     },
@@ -54,7 +58,7 @@ export const stickyNotesSlice = createSlice({
       const note = state.stickyNotesArray.find(note => note.id === id);
       if (note) {
         note.x = x;
-        note.x = y;
+        note.y = y;
       }
     },  
   },
