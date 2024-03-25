@@ -1,3 +1,5 @@
+//Have a think - do I really need a layout slice?
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 
@@ -27,10 +29,18 @@ export const layoutSlice = createSlice({
     name: 'layout',
     initialState,
     reducers: {
-      // You can add more reducers as needed]
-      setLayouts: (state, action: PayloadAction<LayoutsState['layouts']>) => {
-        state.layouts = action.payload;
-      },
+      //Should i have one reducer per type of item?
+
+      // addLayoutItem: (state) => {
+      //   const newID = Math.random().toString(36).substring(7) // This is a placeholder. Use a proper UUID in a real app.
+      //   const newItem = {
+      //     id: newID,
+      //     x: 0,
+      //     y: 0,
+
+      //   };
+      //   state.stickyNotesArray.push(newNote);
+      // },
     },
   });
   

@@ -34,6 +34,7 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y
   });
 
   const style = {
+    // position: "absolute",
     transform: CSS.Transform.toString({
       x: x + (transform ? transform.x : 0),
       y: y + (transform ? transform.y : 0),
