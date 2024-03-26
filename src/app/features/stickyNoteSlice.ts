@@ -15,7 +15,7 @@ interface StickyNotesState {
 
 const initialState: StickyNotesState = {
   stickyNotesArray: [
-    {id: "note1", content: "content for note 1", width: 100, height: 100, x: 0, y: 0}
+    {id: "note1", content: "content for note 1", width: 200, height: 200, x: 0, y: 0}
   ],
 };
 
@@ -28,8 +28,8 @@ export const stickyNotesSlice = createSlice({
       const newNote = {
         id: newNoteId,
         content: "content for note " + newNoteId,
-        width: 100,
-        height: 100,
+        width: 200,
+        height: 200,
         x: 0,
         y: 0
       };

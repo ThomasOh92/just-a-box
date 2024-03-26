@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { Droppable } from './dndkit-components/Droppable';
 import { StickyNoteItem } from './box-components/stickyNote'
 import { ContextMenu } from './box-components/contextMenu';
 import { addStickyNote, moveStickyNote } from '../app/features/stickyNoteSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { useState } from 'react';
 import { Box } from '@mui/material';
+import { MuuriComponent } from 'muuri-react';
+
 
 const SingleBox: React.FC = () => {
   
@@ -20,11 +20,6 @@ const SingleBox: React.FC = () => {
     mouseY: number;
   } | null>(null);
   
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-  );
-
 
   const handleDragEnd = (event: any) => {
         
@@ -48,6 +43,7 @@ const SingleBox: React.FC = () => {
     });
   };
 
+
   // Render begins here
   return (
     <Box onContextMenu={handleRightClick} height={600}>
@@ -58,14 +54,17 @@ const SingleBox: React.FC = () => {
         onAddDocument={() => console.log("adddocplaceholder")} 
         onAddLink={() => console.log("addlinkplaceholder")}
         />
-      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-        <Droppable id="droppable">
-          {/* Sticky note components */}
-          {stickyNotes.map((note) => {
-              return (<StickyNoteItem key={note.id} id={note.id} content={note.content} width={note.width} height={note.height} x={note.x} y={note.y}/>);
-          })}
-        </Droppable>
-      </DndContext>
+      <MuuriComponent >
+        {/* Sticky note components */}
+        {/* {stickyNotes.map((note) => {
+              return (<StickyNoteItem
+                       key={note.id} id={note.id} content={note.content} 
+                       width={note.width} height={note.height} 
+                       x={note.x} y={note.y}/>);
+        })} */}
+      </MuuriComponent>
+
+
     </Box>
   );
   

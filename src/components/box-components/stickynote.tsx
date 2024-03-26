@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Card, CardHeader, IconButton, Box, TextareaAutosize } from '@mui/material';
+import { Paper, Card, CardHeader, Box, TextareaAutosize } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updateStickyNoteContent, removeStickyNote } from '../../app/features/stickyNoteSlice';
-import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
+
+
 
 interface StickyNoteItemProps {
   id: string;
@@ -15,7 +15,7 @@ interface StickyNoteItemProps {
 }
 
 
-export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y}) => {
+export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y, width, height}) => {
 
   const dispatch = useAppDispatch();
   
@@ -29,19 +29,16 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y
     dispatch(removeStickyNote(id));
   };
 
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id,
-  });
 
-  const style = {
-    // position: "absolute",
-    transform: CSS.Transform.toString({
-      x: x + (transform ? transform.x : 0),
-      y: y + (transform ? transform.y : 0),
-      scaleX: 1,
-      scaleY: 1,
-    }),
-  };
+  // const style = {
+  //   // position: "absolute",
+  //   transform: CSS.Transform.toString({
+  //     x: x + (transform ? transform.x : 0),
+  //     y: y + (transform ? transform.y : 0),
+  //     scaleX: 1,
+  //     scaleY: 1
+  //   }),
+  // };
 
   return (
     <Card
@@ -51,19 +48,22 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y
         display: 'flex',
         flexDirection: 'column',
         '&:hover': { border: '1px dotted', borderColor: 'primary.dark', borderRadius: '5px' },
-        width: '100px',
-        height: '100px'
+        width: width,
+        height: height
       }}
-      ref={setNodeRef}
-      style={style}
+
     >
-      <CardHeader className="dragHandle" sx={{ bgcolor: 'grey.200', padding: '13px' }} {...listeners} {...attributes} />
+      <CardHeader className="dragHandle" sx={{ bgcolor: 'grey.200', padding: '13px' }} />
       <Box sx={{ flex: 1, overflow: 'hidden', p: 2 }}>
         <TextareaAutosize
           defaultValue={content}
           onChange={(event) => handleContentChange(id, event.target.value)}
-          minRows={3}
-          style={{ width: '100%', height: '100%', border: 'none', outline: 'none', resize: 'none' }}
+          minRows={2}
+          style={{ width: '100%', height:'40%', border: 'none', 
+            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+            fontSize: '10',
+            outline: 'none',
+            resize: 'none'}}
         />
       </Box>
     </Card>
