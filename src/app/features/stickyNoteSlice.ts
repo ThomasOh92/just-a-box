@@ -3,10 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface StickyNote {
   id: string; // A unique identifier for each sticky note
   content: string;
-  width: number;
-  height: number;
-  x: number;
-  y: number
 }
 
 interface StickyNotesState {
@@ -15,7 +11,7 @@ interface StickyNotesState {
 
 const initialState: StickyNotesState = {
   stickyNotesArray: [
-    {id: "note1", content: "content for note 1", width: 200, height: 200, x: 0, y: 0}
+    {id: "note1", content: "content for note 1"}
   ],
 };
 
@@ -28,10 +24,6 @@ export const stickyNotesSlice = createSlice({
       const newNote = {
         id: newNoteId,
         content: "content for note " + newNoteId,
-        width: 200,
-        height: 200,
-        x: 0,
-        y: 0
       };
       state.stickyNotesArray.push(newNote);
     },
@@ -45,25 +37,25 @@ export const stickyNotesSlice = createSlice({
         note.content = content;
       }    
     },
-    resizeStickyNote: (state, action: PayloadAction<{ id: string; width: number; height: number }>) => {
-        const { id, width, height } = action.payload;
-        const note = state.stickyNotesArray.find(note => note.id === id);
-        if (note) {
-          note.width = width;
-          note.height = height;
-        }
-      }, 
-    moveStickyNote: (state, action: PayloadAction<{ id: string; x: number; y: number }>) => {
-      const { id, x, y } = action.payload;
-      const note = state.stickyNotesArray.find(note => note.id === id);
-      if (note) {
-        note.x = x;
-        note.y = y;
-      }
-    },  
+    // resizeStickyNote: (state, action: PayloadAction<{ id: string; width: number; height: number }>) => {
+    //     const { id, width, height } = action.payload;
+    //     const note = state.stickyNotesArray.find(note => note.id === id);
+    //     if (note) {
+    //       note.width = width;
+    //       note.height = height;
+    //     }
+    //   }, 
+    // moveStickyNote: (state, action: PayloadAction<{ id: string; x: number; y: number }>) => {
+    //   const { id, x, y } = action.payload;
+    //   const note = state.stickyNotesArray.find(note => note.id === id);
+    //   if (note) {
+    //     note.x = x;
+    //     note.y = y;
+    //   }
+    // },  
   },
 });
 
-export const { addStickyNote, removeStickyNote, updateStickyNoteContent, moveStickyNote } = stickyNotesSlice.actions;
+export const { addStickyNote, removeStickyNote, updateStickyNoteContent } = stickyNotesSlice.actions;
 
 export default stickyNotesSlice.reducer;

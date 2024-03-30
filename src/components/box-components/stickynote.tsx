@@ -8,14 +8,10 @@ import { updateStickyNoteContent, removeStickyNote } from '../../app/features/st
 interface StickyNoteItemProps {
   id: string;
   content: string;
-  width: number;
-  height: number;
-  x: number;
-  y: number
 }
 
 
-export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y, width, height}) => {
+export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content}) => {
 
   const dispatch = useAppDispatch();
   
@@ -48,8 +44,8 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content, x, y
         display: 'flex',
         flexDirection: 'column',
         '&:hover': { border: '1px dotted', borderColor: 'primary.dark', borderRadius: '5px' },
-        width: width,
-        height: height
+        width: "200px",
+        height: "200px"
       }}
 
     >

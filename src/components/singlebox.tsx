@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StickyNoteItem } from './box-components/stickyNote'
 import { ContextMenu } from './box-components/contextMenu';
-import { addStickyNote, moveStickyNote } from '../app/features/stickyNoteSlice';
+import { addStickyNote} from '../app/features/stickyNoteSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { useState } from 'react';
 import { Box } from '@mui/material';
 import { MuuriComponent } from 'muuri-react';
-
+import { Item } from './box-components/item';
 
 const SingleBox: React.FC = () => {
   
@@ -21,19 +21,19 @@ const SingleBox: React.FC = () => {
   } | null>(null);
   
 
-  const handleDragEnd = (event: any) => {
+  // const handleDragEnd = (event: any) => {
         
-    console.log(event);
-    const id = event.active.id;
-    const delta = event.delta;
-    const note = stickyNotes.find(note => note.id === id);
+  //   console.log(event);
+  //   const id = event.active.id;
+  //   const delta = event.delta;
+  //   const note = stickyNotes.find(note => note.id === id);
  
-    if (note && id.startsWith('note')) {
-      const newX: number = note.x + delta.x;
-      const newY: number = note.y + delta.y;
-      dispatch(moveStickyNote({ id, x: newX, y: newY }));
-    }
-  };
+  //   if (note && id.startsWith('note')) {
+  //     const newX: number = note.x + delta.x;
+  //     const newY: number = note.y + delta.y;
+  //     dispatch(moveStickyNote({ id, x: newX, y: newY }));
+  //   }
+  // };
 
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -42,6 +42,20 @@ const SingleBox: React.FC = () => {
       mouseY: event.clientY + 4,
     });
   };
+
+  const stickyNotesToRender =  stickyNotes.map((note) => {
+    return (<StickyNoteItem
+             key={note.id} id={note.id} content={note.content}/>);
+  }) 
+
+  const items = [
+    {key: '1', text: 'zl', size: 's', color: 'red'},
+    {key: '2', text: 'zg', size: 'l', color: 'blue'},
+    {key: '3', text: 'nx', size: 'l', color: 'blue'},
+  ];
+
+
+  const itemsToRender = items.map((props) => <Item {...props} />);
 
 
   // Render begins here
@@ -55,13 +69,8 @@ const SingleBox: React.FC = () => {
         onAddLink={() => console.log("addlinkplaceholder")}
         />
       <MuuriComponent >
-        {/* Sticky note components */}
-        {/* {stickyNotes.map((note) => {
-              return (<StickyNoteItem
-                       key={note.id} id={note.id} content={note.content} 
-                       width={note.width} height={note.height} 
-                       x={note.x} y={note.y}/>);
-        })} */}
+        {itemsToRender}
+        {/* {stickyNotesToRender}        */}
       </MuuriComponent>
 
 
