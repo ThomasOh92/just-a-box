@@ -75,9 +75,9 @@ const SingleBox: React.FC = () => {
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
         compactType={null}
       >
-        <div key="1">1</div>
-        <div key="2">2</div>
-        <div key="3">3</div>
+        <div key="1" style={{ border: '2px solid red' }}>1</div>
+        <div key="2" style={{ border: '2px solid green' }}>2</div>
+        <div key="3" style={{ border: '2px solid blue' }}>3</div>
       </ResponsiveGridLayout>
 
     </Box>
