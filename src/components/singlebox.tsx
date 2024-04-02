@@ -5,8 +5,8 @@ import { addStickyNote} from '../app/features/stickyNoteSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { useState } from 'react';
 import { Box } from '@mui/material';
-import { MuuriComponent } from 'muuri-react';
-import { Item } from './box-components/item';
+import { Responsive, WidthProvider } from "react-grid-layout";
+import '../globalStyles.css';
 
 const SingleBox: React.FC = () => {
   
@@ -48,15 +48,15 @@ const SingleBox: React.FC = () => {
              key={note.id} id={note.id} content={note.content}/>);
   }) 
 
-  const items = [
-    {key: '1', text: 'zl', size: 's', color: 'red'},
-    {key: '2', text: 'zg', size: 'l', color: 'blue'},
-    {key: '3', text: 'nx', size: 'l', color: 'blue'},
-  ];
+  const layouts = {
+    lg : [ 
+    { i: "a", x: 0, y: 0, w: 1, h: 2 },
+    { i: "b", x: 1, y: 0, w: 3, h: 2 },
+    { i: "c", x: 4, y: 0, w: 1, h: 2 }
+    ],
+  };
 
-
-  const itemsToRender = items.map((props) => <Item {...props} />);
-
+  const ResponsiveGridLayout = WidthProvider(Responsive);
 
   // Render begins here
   return (
@@ -68,11 +68,17 @@ const SingleBox: React.FC = () => {
         onAddDocument={() => console.log("adddocplaceholder")} 
         onAddLink={() => console.log("addlinkplaceholder")}
         />
-      <MuuriComponent >
-        {itemsToRender}
-        {/* {stickyNotesToRender}        */}
-      </MuuriComponent>
-
+      <ResponsiveGridLayout
+        className="layout"
+        layouts={layouts}
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        compactType={null}
+      >
+        <div key="1">1</div>
+        <div key="2">2</div>
+        <div key="3">3</div>
+      </ResponsiveGridLayout>
 
     </Box>
   );

@@ -17,7 +17,11 @@ module.exports = (env, argv) => {
               presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
             }
           },
-        }
+        },
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
+        },
       ],
     },
     resolve: {
