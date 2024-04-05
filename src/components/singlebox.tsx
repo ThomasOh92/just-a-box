@@ -8,6 +8,12 @@ import { Box } from '@mui/material';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import '../globalStyles.css';
 
+// Layout State - Manages the x, y, w, h of every element
+// Sticky Note State - Manages sticky note content but with id (object, with key-value, id:string, content: string)
+// Doc Path State - Manages doc filepath but with id (as an object, with key-value, id:string, content: string)
+// Web Link State - Manages url but with id (as an object, with key-value, id:string, content: string)
+
+
 const SingleBox: React.FC = () => {
   
   const stickyNotes = useAppSelector(state => state.stickyNotes.stickyNotesArray)
@@ -50,9 +56,9 @@ const SingleBox: React.FC = () => {
 
   const layouts = {
     lg : [ 
-    { i: "a", x: 0, y: 0, w: 1, h: 2 },
-    { i: "b", x: 1, y: 0, w: 3, h: 2 },
-    { i: "c", x: 4, y: 0, w: 1, h: 2 }
+    { i: "a", x: 0, y: 0, w: 1, h: 1 },
+    { i: "b", x: 2, y: 2, w: 1, h: 1 },
+    { i: "c", x: 5, y: 5, w: 1, h: 1 }
     ],
   };
 
@@ -71,13 +77,16 @@ const SingleBox: React.FC = () => {
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        breakpoints={{ lg: 1200 }}
+        cols={{ lg: 12 }}
         compactType={null}
       >
-        <div key="1" style={{ border: '2px solid red' }}>1</div>
-        <div key="2" style={{ border: '2px solid green' }}>2</div>
-        <div key="3" style={{ border: '2px solid blue' }}>3</div>
+        {/* Test Elements */}
+        <div key="a" style={{ border: '2px solid red' }}>1</div>
+        <div key="b" style={{ border: '2px solid green' }}>2</div>
+        <div key="c" style={{ border: '2px solid blue' }}>3</div>
+
+        {/* Sticky Note Elements */}
       </ResponsiveGridLayout>
 
     </Box>

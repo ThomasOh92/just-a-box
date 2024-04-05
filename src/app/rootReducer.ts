@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   fileLinks: fileLinkSlice,
   stickyNotes: stickyNoteSlice,
   webLinks: webLinkSlice,
-  // layout: layoutSlice
+  layout: layoutSlice
   // Add other slices as needed
 });
 
