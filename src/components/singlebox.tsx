@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import '../globalStyles.css';
+import { setLayouts } from '../app/features/layoutSlice';
 
 // Layout State - Manages the x, y, w, h of every element
 // Sticky Note State - Manages sticky note content but with id (object, with key-value, id:string, content: string)
@@ -16,31 +17,23 @@ import '../globalStyles.css';
 
 const SingleBox: React.FC = () => {
   
+  const layout = useAppSelector(state => state.layout)
   const stickyNotes = useAppSelector(state => state.stickyNotes.stickyNotesArray)
 
   const dispatch = useAppDispatch();
 
-  // State to open menu on right click
+  // Layout Management
+  const onLayoutChange = (newLayout: any, allLayouts: any) => {
+    dispatch(setLayouts(allLayouts));
+    console.log(allLayouts, "layout change") 
+  };
+  
+  // For Right Clicks
   const [contextMenu, setContextMenu] = useState<{
     mouseX: number;
     mouseY: number;
   } | null>(null);
   
-
-  // const handleDragEnd = (event: any) => {
-        
-  //   console.log(event);
-  //   const id = event.active.id;
-  //   const delta = event.delta;
-  //   const note = stickyNotes.find(note => note.id === id);
- 
-  //   if (note && id.startsWith('note')) {
-  //     const newX: number = note.x + delta.x;
-  //     const newY: number = note.y + delta.y;
-  //     dispatch(moveStickyNote({ id, x: newX, y: newY }));
-  //   }
-  // };
-
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
     setContextMenu({
@@ -49,18 +42,14 @@ const SingleBox: React.FC = () => {
     });
   };
 
+  // For Sticky Notes - you need to bring in the keys/id, and the content
+
+
+
   const stickyNotesToRender =  stickyNotes.map((note) => {
     return (<StickyNoteItem
              key={note.id} id={note.id} content={note.content}/>);
   }) 
-
-  const layouts = {
-    lg : [ 
-    { i: "a", x: 0, y: 0, w: 1, h: 1 },
-    { i: "b", x: 2, y: 2, w: 1, h: 1 },
-    { i: "c", x: 5, y: 5, w: 1, h: 1 }
-    ],
-  };
 
   const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -76,10 +65,11 @@ const SingleBox: React.FC = () => {
         />
       <ResponsiveGridLayout
         className="layout"
-        layouts={layouts}
+        layouts={layout}
         breakpoints={{ lg: 1200 }}
         cols={{ lg: 12 }}
         compactType={null}
+        onLayoutChange={onLayoutChange}
       >
         {/* Test Elements */}
         <div key="a" style={{ border: '2px solid red' }}>1</div>
