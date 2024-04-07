@@ -15,7 +15,7 @@ interface LayoutsState {
 // Initial state
 const initialState: LayoutsState = {
     lg: [ 
-      { i: "note1", x: 2, y: 2, w: 2, h: 2}
+      { i: "note1", x: 2, y: 2, w: 2, h: 1}
     ],
 };
 
@@ -43,7 +43,7 @@ const layoutsSlice = createSlice({
 });
   
   // Exporting the action creators
-  export const { setLayouts } = layoutsSlice.actions;
+  export const { setLayouts, addLayoutItem } = layoutsSlice.actions;
   
   // Exporting the reducer
   export default layoutsSlice.reducer;

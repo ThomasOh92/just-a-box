@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, CardHeader, Box, TextareaAutosize } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { updateStickyNoteContent, removeStickyNote } from '../../app/features/stickyNoteSlice';
+import { updateStickyNoteContent, removeFromStickyNoteState } from '../../app/features/stickyNoteSlice';
 
 interface StickyNoteItemProps {
   id: string;
@@ -19,7 +19,7 @@ export const StickyNoteItem = React.forwardRef<HTMLDivElement, StickyNoteItemPro
 
   // Delete a sticky note
   const handleDelete = (id: string) => {
-    dispatch(removeStickyNote(id));
+    dispatch(removeFromStickyNoteState(id));
   };
 
 
@@ -31,8 +31,8 @@ export const StickyNoteItem = React.forwardRef<HTMLDivElement, StickyNoteItemPro
         display: 'flex',
         flexDirection: 'column',
         '&:hover': { border: '1px dotted', borderColor: 'primary.dark', borderRadius: '5px' },
-        width: "200px",
-        height: "200px"
+        maxWidth: '100%',
+        maxHeight: '100%',
       }}
 
     >

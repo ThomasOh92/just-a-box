@@ -19,15 +19,15 @@ export const stickyNotesSlice = createSlice({
   name: 'stickyNotes',
   initialState,
   reducers: {
-    addStickyNote: (state) => {
-      const newNoteId = "note" + Math.random().toString(36).substring(7) // This is a placeholder. Use a proper UUID in a real app.
+    addToStickyNoteState: (state, action: PayloadAction<{newNoteId: string}>) => {
+      const { newNoteId } = action.payload;
       const newNote = {
         id: newNoteId,
         content: "content for note " + newNoteId,
       };
       state.stickyNotesArray.push(newNote);
     },
-    removeStickyNote: (state, action: PayloadAction<string>) => {
+    removeFromStickyNoteState: (state, action: PayloadAction<string>) => {
       state.stickyNotesArray = state.stickyNotesArray.filter(note => note.id !== action.payload);
     },
     updateStickyNoteContent: (state, action: PayloadAction<{ id: string; content: string }>) => {
@@ -56,6 +56,6 @@ export const stickyNotesSlice = createSlice({
   },
 });
 
-export const { addStickyNote, removeStickyNote, updateStickyNoteContent } = stickyNotesSlice.actions;
+export const { addToStickyNoteState, removeFromStickyNoteState, updateStickyNoteContent } = stickyNotesSlice.actions;
 
 export default stickyNotesSlice.reducer;
