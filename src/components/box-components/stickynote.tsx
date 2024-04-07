@@ -1,17 +1,14 @@
 import * as React from 'react';
-import { Paper, Card, CardHeader, Box, TextareaAutosize } from '@mui/material';
+import { Card, CardHeader, Box, TextareaAutosize } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updateStickyNoteContent, removeStickyNote } from '../../app/features/stickyNoteSlice';
-
-
 
 interface StickyNoteItemProps {
   id: string;
   content: string;
 }
 
-
-export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content}) => {
+export const StickyNoteItem = React.forwardRef<HTMLDivElement, StickyNoteItemProps>(({ id, content}, ref) => {
 
   const dispatch = useAppDispatch();
   
@@ -25,16 +22,6 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content}) => 
     dispatch(removeStickyNote(id));
   };
 
-
-  // const style = {
-  //   // position: "absolute",
-  //   transform: CSS.Transform.toString({
-  //     x: x + (transform ? transform.x : 0),
-  //     y: y + (transform ? transform.y : 0),
-  //     scaleX: 1,
-  //     scaleY: 1
-  //   }),
-  // };
 
   return (
     <Card
@@ -55,7 +42,7 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content}) => 
           defaultValue={content}
           onChange={(event) => handleContentChange(id, event.target.value)}
           minRows={2}
-          style={{ width: '100%', height:'40%', border: 'none', 
+          style={{ width: '100%', height:'100%', border: 'none', 
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
             fontSize: '10',
             outline: 'none',
@@ -64,7 +51,7 @@ export const StickyNoteItem: React.FC<StickyNoteItemProps> = ({id, content}) => 
       </Box>
     </Card>
   );
-};
+});
 
 
 //These components assume you have actions like deleteDocLink, deleteWebLink,

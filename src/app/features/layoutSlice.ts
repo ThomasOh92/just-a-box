@@ -15,9 +15,7 @@ interface LayoutsState {
 // Initial state
 const initialState: LayoutsState = {
     lg: [ 
-      { i: "a", x: 0, y: 0, w: 1, h: 1 },
-      { i: "b", x: 2, y: 2, w: 1, h: 1 },
-      { i: "c", x: 5, y: 5, w: 1, h: 1 }
+      { i: "note1", x: 2, y: 2, w: 2, h: 2}
     ],
 };
 

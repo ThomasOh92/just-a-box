@@ -8,6 +8,7 @@ import { Box } from '@mui/material';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import '../globalStyles.css';
 import { setLayouts } from '../app/features/layoutSlice';
+import { notDeepEqual } from 'assert';
 
 // Layout State - Manages the x, y, w, h of every element
 // Sticky Note State - Manages sticky note content but with id (object, with key-value, id:string, content: string)
@@ -19,7 +20,6 @@ const SingleBox: React.FC = () => {
   
   const layout = useAppSelector(state => state.layout)
   const stickyNotes = useAppSelector(state => state.stickyNotes.stickyNotesArray)
-
   const dispatch = useAppDispatch();
 
   // Layout Management
@@ -43,13 +43,16 @@ const SingleBox: React.FC = () => {
   };
 
   // For Sticky Notes - you need to bring in the keys/id, and the content
-
-
-
-  const stickyNotesToRender =  stickyNotes.map((note) => {
-    return (<StickyNoteItem
-             key={note.id} id={note.id} content={note.content}/>);
-  }) 
+  const stickyNotesToRender = stickyNotes.map((note) => {
+    return (
+      <div key={note.id}>
+        <StickyNoteItem
+          id={note.id}
+          content={note.content}
+        />
+      </div>
+    );
+  })
 
   const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -70,13 +73,9 @@ const SingleBox: React.FC = () => {
         cols={{ lg: 12 }}
         compactType={null}
         onLayoutChange={onLayoutChange}
-      >
-        {/* Test Elements */}
-        <div key="a" style={{ border: '2px solid red' }}>1</div>
-        <div key="b" style={{ border: '2px solid green' }}>2</div>
-        <div key="c" style={{ border: '2px solid blue' }}>3</div>
-
+      > 
         {/* Sticky Note Elements */}
+        {stickyNotesToRender}
       </ResponsiveGridLayout>
 
     </Box>
