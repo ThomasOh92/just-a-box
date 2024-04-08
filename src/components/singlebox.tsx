@@ -26,7 +26,7 @@ const SingleBox: React.FC = () => {
     dispatch(setLayouts(allLayouts));
     console.log(allLayouts, "layout change") 
   };
-  
+
   // For Right Clicks
   const [contextMenu, setContextMenu] = useState<{
     mouseX: number;
