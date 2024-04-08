@@ -57,7 +57,7 @@ const SingleBox: React.FC = () => {
   const addStickyNote = () => {
     const newNoteId = "note" + Math.random().toString(36).substring(7) // Random ID
     dispatch(addToStickyNoteState({ newNoteId }));
-    dispatch(addLayoutItem({ breakpoint: "lg", layoutItem: { i: newNoteId, x: 0, y: 0, w: 2, h: 1}}))
+    dispatch(addLayoutItem({ breakpoint: "lg", layoutItem: { i: newNoteId, x: 0, y: 0, w: 2, h: 5}}))
   }
 
 
@@ -82,6 +82,8 @@ const SingleBox: React.FC = () => {
         compactType={null}
         onLayoutChange={onLayoutChange}
         preventCollision={true}
+        draggableHandle=".dragHandle"
+        rowHeight={30}
       > 
         {/* Sticky Note Elements */}
         {stickyNotesToRender}
