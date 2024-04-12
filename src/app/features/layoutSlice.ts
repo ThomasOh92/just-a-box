@@ -5,7 +5,9 @@ interface LayoutItem {
     x: number,
     y: number,
     w: number,
-    h: number
+    h: number,
+    isResizable?: boolean,
+    resizeHandles?: any[]
 }
   
 interface LayoutsState {
@@ -15,7 +17,7 @@ interface LayoutsState {
 // Initial state
 const initialState: LayoutsState = {
     lg: [ 
-      { i: "note1", x: 2, y: 2, w: 2, h: 5},
+      { i: "note1", x: 2, y: 2, w: 2, h: 5, isResizable: true, resizeHandles: ["se"]},
     ],
 };
 

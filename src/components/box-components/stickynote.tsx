@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { Card, CardHeader, Box, TextareaAutosize } from '@mui/material';
+import { Card, CardHeader, Input } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updateStickyNoteContent, removeFromStickyNoteState } from '../../app/features/stickyNoteSlice';
+import '../../globalStyles.css';
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 interface StickyNoteItemProps {
   id: string;
@@ -31,25 +34,23 @@ export const StickyNoteItem = React.forwardRef<HTMLDivElement, StickyNoteItemPro
         display: 'flex',
         flexDirection: 'column',
         '&:hover': { border: '1px dotted', borderColor: 'primary.dark', borderRadius: '5px' },
-        maxWidth: '100%',
-        maxHeight: '100%',
+        width: '100%',
+        height: '100%',
       }}
 
     >
-      <CardHeader className="dragHandle" sx={{ bgcolor: 'grey.200', padding: '13px' }} />
-      <Box sx={{ flex: 1, overflow: 'hidden', p: 2 }}>
-        <TextareaAutosize
-          defaultValue={content}
-          onChange={(event) => handleContentChange(id, event.target.value)}
-          minRows={2}
-          style={{ width: '100%', height:'100%', border: 'none', 
+      <CardHeader className="dragHandle" sx={{ bgcolor: 'grey.200', padding: '11px' }} />
+        <textarea  
+          rows={6} 
+          placeholder={"Enter your text here..."}
+          style={{ width: '100%', height:'100%', border: '15px', padding: '7px',
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-            fontSize: '10',
+            fontSize: '7',
             outline: 'none',
             resize: 'none'}}
         />
-      </Box>
-    </Card>
+      
+     </Card>
   );
 });
 

@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import '../globalStyles.css';
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 import { setLayouts, addLayoutItem } from '../app/features/layoutSlice';
 
 // Layout State - Manages the x, y, w, h of every element
@@ -57,7 +59,7 @@ const SingleBox: React.FC = () => {
   const addStickyNote = () => {
     const newNoteId = "note" + Math.random().toString(36).substring(7) // Random ID
     dispatch(addToStickyNoteState({ newNoteId }));
-    dispatch(addLayoutItem({ breakpoint: "lg", layoutItem: { i: newNoteId, x: 0, y: 0, w: 2, h: 5}}))
+    dispatch(addLayoutItem({ breakpoint: "lg", layoutItem: { i: newNoteId, x: 0, y: 0, w: 2, h: 5, isResizable: true, resizeHandles: ["se"]}}))
   }
 
 
@@ -77,13 +79,15 @@ const SingleBox: React.FC = () => {
       <ResponsiveGridLayout
         className="layout"
         layouts={layout}
-        breakpoints={{ lg: 1200 }}
-        cols={{ lg: 12 }}
+        breakpoints={{ lg: 1200}}
+        cols={{ lg: 12}}
         compactType={null}
         onLayoutChange={onLayoutChange}
         preventCollision={true}
         draggableHandle=".dragHandle"
+        useCSSTransforms={true}
         rowHeight={30}
+        isResizable={true}
       > 
         {/* Sticky Note Elements */}
         {stickyNotesToRender}
