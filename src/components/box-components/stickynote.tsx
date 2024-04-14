@@ -5,6 +5,8 @@ import { updateStickyNoteContent, removeFromStickyNoteState } from '../../app/fe
 import '../../globalStyles.css';
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import { useState, useEffect } from 'react';
+
 
 interface StickyNoteItemProps {
   id: string;
@@ -12,19 +14,22 @@ interface StickyNoteItemProps {
 }
 
 export const StickyNoteItem = React.forwardRef<HTMLDivElement, StickyNoteItemProps>(({ id, content}, ref) => {
-
+  const [localContent, setLocalContent] = useState(content);
   const dispatch = useAppDispatch();
   
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch(updateStickyNoteContent({id, content: localContent}));
+    }, 1000); // Update Redux store after 1 second of inactivity
+
+    return () => clearTimeout(timer); // Clear the timer if the user starts typing again
+  }, [localContent, dispatch, id]);
+
+
   // Update content of a sticky note
-  const handleContentChange = (id: string, content: string) => {
-    dispatch(updateStickyNoteContent({id, content}));
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setLocalContent(e.target.value);
   };
-
-  // Delete a sticky note
-  const handleDelete = (id: string) => {
-    dispatch(removeFromStickyNoteState(id));
-  };
-
 
   return (
     <Card
@@ -43,13 +48,15 @@ export const StickyNoteItem = React.forwardRef<HTMLDivElement, StickyNoteItemPro
         <textarea  
           rows={6} 
           placeholder={"Enter your text here..."}
+          onChange={handleContentChange}
+          onBlur={() => dispatch(updateStickyNoteContent({id, content: localContent}))} 
           style={{ width: '100%', height:'100%', border: '15px', padding: '7px',
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
             fontSize: '7',
             outline: 'none',
             resize: 'none'}}
+          value={localContent}
         />
-      
      </Card>
   );
 });

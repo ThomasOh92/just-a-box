@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Menu, MenuItem } from '@mui/material';
 
 interface ContextMenuProps {
-  contextMenu: { mouseX: number; mouseY: number } | null;
+  contextMenu: { mouseX: number; mouseY: number} | null;
   onClose: () => void;
   onAddStickyNote: () => void;
   onAddDocument: () => void;
@@ -21,9 +21,10 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ contextMenu, onClose, 
           : undefined
       }
     >
-      <MenuItem onClick={onAddStickyNote}>Sticky Note</MenuItem>
-      <MenuItem onClick={onAddDocument}>Document</MenuItem>
-      <MenuItem onClick={onAddLink}>Link</MenuItem>
+        <MenuItem onClick={onAddStickyNote}>Add Sticky Note</MenuItem>
+        <MenuItem onClick={onAddDocument}>Add Document</MenuItem>
+        <MenuItem onClick={onAddLink}>Add Link</MenuItem>
     </Menu>
   );
 };
+

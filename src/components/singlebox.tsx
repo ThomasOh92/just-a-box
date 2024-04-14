@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { StickyNoteItem } from './box-components/stickyNote'
 import { ContextMenu } from './box-components/contextMenu';
-import { addToStickyNoteState } from '../app/features/stickyNoteSlice';
+import { addToStickyNoteState,  removeFromStickyNoteState } from '../app/features/stickyNoteSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { useState } from 'react';
 import { Box } from '@mui/material';
-import { Responsive, WidthProvider } from "react-grid-layout";
+import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 import '../globalStyles.css';
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { setLayouts, addLayoutItem } from '../app/features/layoutSlice';
 
 // Layout State - Manages the x, y, w, h of every element
 // Sticky Note State - Manages sticky note content but with id (object, with key-value, id:string, content: string)
@@ -19,15 +18,22 @@ import { setLayouts, addLayoutItem } from '../app/features/layoutSlice';
 
 const SingleBox: React.FC = () => {
   
-  const layout = useAppSelector(state => state.layout)
+  const layouts: Layouts = {
+    lg: [ 
+      { i: "note1", x: 2, y: 2, w: 2, h: 5, isResizable: true, resizeHandles: ["se"]},
+      { i: "test", x: 0, y: 0, w: 2, h: 5, isResizable: true, resizeHandles: ["se"]}
+    ],  
+  }
   const stickyNotes = useAppSelector(state => state.stickyNotes.stickyNotesArray)
   const dispatch = useAppDispatch();
 
   // Layout Management
-  const onLayoutChange = (newLayout: any, allLayouts: any) => {
-    dispatch(setLayouts(allLayouts));
-    console.log(allLayouts, "layout change") 
+  const onLayoutChange = (newLayout: Layout, allLayouts: Layouts) => {
+    layouts.lg = [newLayout];
   };
+  const addStickyNotetoLayout = (newNoteId: string) => {
+    layouts.lg.push({ i: newNoteId, x: 0, y: 0, w: 2, h: 5, isResizable: true, resizeHandles: ["se"]});
+  }
 
   // For Right Clicks
   const [contextMenu, setContextMenu] = useState<{
@@ -35,7 +41,7 @@ const SingleBox: React.FC = () => {
     mouseY: number;
   } | null>(null);
   
-  const handleRightClick = (event: React.MouseEvent) => {
+  const handleRightClick = (event: React.MouseEvent, id?: string) => {
     event.preventDefault();
     setContextMenu({
       mouseX: event.clientX - 2,
@@ -59,7 +65,7 @@ const SingleBox: React.FC = () => {
   const addStickyNote = () => {
     const newNoteId = "note" + Math.random().toString(36).substring(7) // Random ID
     dispatch(addToStickyNoteState({ newNoteId }));
-    dispatch(addLayoutItem({ breakpoint: "lg", layoutItem: { i: newNoteId, x: 0, y: 0, w: 2, h: 5, isResizable: true, resizeHandles: ["se"]}}))
+    addStickyNotetoLayout(newNoteId);
   }
 
 
@@ -68,7 +74,7 @@ const SingleBox: React.FC = () => {
 
   // Render begins here
   return (
-    <Box onContextMenu={handleRightClick} height={600}>
+    <Box onContextMenu={handleRightClick} height={600} id="box">
       <ContextMenu 
         contextMenu={contextMenu} 
         onClose={() => setContextMenu(null)} 
@@ -78,19 +84,20 @@ const SingleBox: React.FC = () => {
         />
       <ResponsiveGridLayout
         className="layout"
-        layouts={layout}
-        breakpoints={{ lg: 1200}}
+        layouts={layouts}
+        breakpoints={{ lg: 800}}
         cols={{ lg: 12}}
         compactType={null}
-        onLayoutChange={onLayoutChange}
-        preventCollision={true}
+        onLayoutChange={(currentLayout: Layout[], allLayouts: Layouts) => onLayoutChange(currentLayout[0], allLayouts)}
         draggableHandle=".dragHandle"
-        useCSSTransforms={true}
-        rowHeight={30}
+        rowHeight={20}
         isResizable={true}
+        preventCollision={true}
       > 
         {/* Sticky Note Elements */}
         {stickyNotesToRender}
+
+        <div key="test" className="dragHandle" style={{border: '1px solid black' }}></div>
       </ResponsiveGridLayout>
 
     </Box>
